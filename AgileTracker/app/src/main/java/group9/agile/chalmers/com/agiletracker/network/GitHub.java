@@ -45,7 +45,7 @@ public class GitHub extends AsyncTask<String, String, Integer> {
             publishProgress("Trying");
             publishProgress("Length: "+repos.size());
             for (Repository repo : repos) {
-                Commit commit=commitService.getCommits(RepositoryId.create(name[0], name[1])).get(i++).getCommit();
+                Commit commit=commitService.getCommits(RepositoryId.create(name[0], repo.getName())).get(i++).getCommit();
                 publishProgress("Repo: " + repo.getName() + " Message: " + commit.getMessage().toString() + " Name: " + commit.getAuthor().getName()+" Number: "+(i-1));
             }
         } catch (IOException e) {

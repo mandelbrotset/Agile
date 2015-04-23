@@ -15,7 +15,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new GitHub().execute("alma-castant", "pinteresting");
+        new GitHub().execute("alma-castant");
     }
 
 
