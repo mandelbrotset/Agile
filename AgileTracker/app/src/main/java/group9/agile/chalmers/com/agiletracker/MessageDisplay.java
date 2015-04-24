@@ -2,27 +2,26 @@ package group9.agile.chalmers.com.agiletracker;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.DisplayMetrics;
 import android.widget.TextView;
 
 public class MessageDisplay extends ActionBarActivity {
 
-
-    TextView textView;
+    private static float SCALE=2.5f;
 
     /** Called when the user clicks the Send button */
     public void onCreate(Bundle savedStates) {
         super.onCreate(savedStates);
         setContentView(R.layout.activity_mdisplaymessage);
 
-        int but = getIntent().getIntExtra("Number", -1);
-        textView= (TextView) findViewById(R.id.textViewDisplay);
-        textView.setText(" "+ but);
-
-  /*  @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }*/
+        Integer but = getIntent().getIntExtra("Number", -1);
+        TextView textView = (TextView) findViewById(R.id.textViewDisplay);
+        textView.setText(but.toString());
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int width = displaymetrics.widthPixels;
+        textView.setTextSize(width/SCALE);
+    }
 
 
    /*@Override
@@ -44,6 +43,6 @@ public class MessageDisplay extends ActionBarActivity {
             return true;
         }
 
-        return super.onOptionsItemSelected(item);*/
-    }
+        return super.onOptionsItemSelected(item);
+    }*/
 }
