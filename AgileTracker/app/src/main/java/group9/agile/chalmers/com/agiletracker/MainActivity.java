@@ -9,24 +9,35 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import group9.agile.chalmers.com.agiletracker.ui.TabsPageAdapter;
+import group9.agile.chalmers.com.agiletracker.common.view.SampleFragmentPagerAdapter;
+import group9.agile.chalmers.com.agiletracker.common.view.SlidingTabLayout;
+import group9.agile.chalmers.com.agiletracker.ui.PokerGameFragment;
+import group9.agile.chalmers.com.agiletracker.ui.SlidingTabsBasicFragment;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends FragmentActivity {
 
-    TabsPageAdapter tabsPagerAdapter;
     ViewPager mViewPager;
 
     /** Called when the user clicks the Send button */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         final ActionBar actionBar = getActionBar();
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // Get the ViewPager and set it's PagerAdapter so that it can display items
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager(),
+                MainActivity.this));
 
-        tabsPagerAdapter =new TabsPageAdapter(getSupportFragmentManager());
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(tabsPagerAdapter);
+        // Give the SlidingTabLayout the ViewPager
+        SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        // Center the tabs in the layout
+        slidingTabLayout.setDistributeEvenly(true);
+        slidingTabLayout.setViewPager(viewPager);
+
 
 
         // Specify that tabs should be displayed in the action bar.
