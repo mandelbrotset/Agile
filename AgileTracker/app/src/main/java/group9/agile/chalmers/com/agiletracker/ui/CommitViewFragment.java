@@ -57,7 +57,7 @@ public class CommitViewFragment extends Fragment {
     }
 
     /**
-     * Setup spinner (the drop down list)
+     * Setup the drop down list(spinner) that displays all the branches
      * @param view
      */
     private void setupSpinner(View view){
@@ -71,6 +71,7 @@ public class CommitViewFragment extends Fragment {
         new ListRepositoriesTask().execute(SHA);
 
         dropDownList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            // Is called each time the current item is changed
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                                        int arg2, long arg3) {
                 new ListRepositoriesTask().execute(SHA);
@@ -86,7 +87,7 @@ public class CommitViewFragment extends Fragment {
      */
     public static void updateBranchList(ArrayList<String> branches){
         if(branches == null) {
-            Log.e("branch","GUI: error branchlist is null");
+            Log.e("branch","GUI: error branch list is null");
             return;
         }
 
