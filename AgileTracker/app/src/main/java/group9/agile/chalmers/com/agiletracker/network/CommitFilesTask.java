@@ -1,6 +1,7 @@
 package group9.agile.chalmers.com.agiletracker.network;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.eclipse.egit.github.core.CommitFile;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
@@ -35,6 +36,7 @@ public class CommitFilesTask extends AsyncTask<String, Void, List<CommitFile>> {
     protected void onPostExecute(List<CommitFile> commitFiles) {
         for(CommitFile file: commitFiles){
             System.out.println("FILE NAME: "+file.getFilename());
+            Log.e("repo", file.getFilename());
         }
     }
 }

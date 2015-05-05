@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import group9.agile.chalmers.com.agiletracker.common.logger.Log;
 import group9.agile.chalmers.com.agiletracker.common.view.SampleFragmentPagerAdapter;
 import group9.agile.chalmers.com.agiletracker.common.view.SlidingTabLayout;
 import group9.agile.chalmers.com.agiletracker.ui.PokerGameFragment;
@@ -24,7 +25,6 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         final ActionBar actionBar = getActionBar();
 
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Get the ViewPager and set it's PagerAdapter so that it can display items
@@ -37,8 +37,6 @@ public class MainActivity extends FragmentActivity {
         // Center the tabs in the layout
         slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(viewPager);
-
-
 
         // Specify that tabs should be displayed in the action bar.
        // actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);

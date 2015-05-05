@@ -42,6 +42,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 
@@ -49,6 +50,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import group9.agile.chalmers.com.agiletracker.R;
+import group9.agile.chalmers.com.agiletracker.network.CommitFilesTask;
+import group9.agile.chalmers.com.agiletracker.network.GitHub;
 
 /**
  * Simple fraggment which contains a LogView and uses is to output log data it receives
@@ -58,7 +61,6 @@ public class LogFragment extends Fragment {
 
     private LogView mLogView;
     private ScrollView mScrollView;
-    private Spinner dropDownList;
 
     public LogFragment() {}
 
@@ -89,19 +91,16 @@ public class LogFragment extends Fragment {
 
         mScrollView.addView(mLogView);
         return mScrollView;
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View result = inflateViews();
+        //View result = inflateViews();
         View view = inflater.inflate(R.layout.fragment_commit_view, container, false);
-        setupSpinner(view);
 
-
+        Log.e("test","BUTTON");
         mLogView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -114,33 +113,11 @@ public class LogFragment extends Fragment {
                 mScrollView.fullScroll(ScrollView.FOCUS_DOWN);
             }
         });
-        return result;
+        return view;
+        //return result;
     }
 
-    private void setupSpinner(View view){
-        // Spinner (drop down list)
-        dropDownList = (Spinner) view.findViewById(R.id.spinner);
-        List<String> list = new ArrayList<String>();
-        list.add("item1");
-        list.add("item2");
-        list.add("item3");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
-                (getActivity(), android.R.layout.simple_spinner_item, list);
 
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dropDownList.setAdapter(dataAdapter);
-
-        dropDownList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                                       int arg2, long arg3) {
-                Log.e("spinner", "klkl");
-            }
-
-            public void onNothingSelected(AdapterView<?> arg0) {
-                Log.e("spinner", "klkl");
-            }
-        });
-    }
 
 
     public LogView getLogView() {

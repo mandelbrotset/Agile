@@ -1,6 +1,7 @@
 package group9.agile.chalmers.com.agiletracker.network;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.eclipse.egit.github.core.Commit;
 import org.eclipse.egit.github.core.Repository;
@@ -47,6 +48,7 @@ public class GitHub extends AsyncTask<String, String, Integer> {
             for (Repository repo : repos) {
                 Commit commit=commitService.getCommits(RepositoryId.create(name[0], repo.getName())).get(i++).getCommit();
                 publishProgress("Repo: " + repo.getName() + " Message: " + commit.getMessage().toString() + " Name: " + commit.getAuthor().getName()+" Number: "+(i-1));
+                Log.e("repo",repo.getName());
             }
         } catch (IOException e) {
             e.printStackTrace();
