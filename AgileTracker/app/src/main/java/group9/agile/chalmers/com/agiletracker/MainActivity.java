@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import group9.agile.chalmers.com.agiletracker.common.logger.Log;
+import group9.agile.chalmers.com.agiletracker.common.notification.GithubChangesTracker;
 import group9.agile.chalmers.com.agiletracker.common.view.SampleFragmentPagerAdapter;
 import group9.agile.chalmers.com.agiletracker.common.view.SlidingTabLayout;
 import group9.agile.chalmers.com.agiletracker.ui.PokerGameFragment;
@@ -60,7 +61,7 @@ public class MainActivity extends FragmentActivity {
 
             }
         };
-
+        new GithubChangesTracker(this).start();
 
     }
 
