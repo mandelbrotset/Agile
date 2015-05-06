@@ -4,14 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:id="@+id/spinner"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:dropDownSelector="@color/accent_material_light" />
-
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/tvBody"
         android:layout_width="wrap_content"
@@ -21,6 +13,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:textAppearance="?android:attr/textAppearanceMedium" />'
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:id="@+id/spinner"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:dropDownSelector="@color/accent_material_light" />'
 
 </LinearLayout>
