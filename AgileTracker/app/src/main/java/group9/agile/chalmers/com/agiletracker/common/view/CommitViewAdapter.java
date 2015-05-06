@@ -36,8 +36,10 @@ public class CommitViewAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        LinearLayout layout = (LinearLayout) view;
-        TextView text = (TextView) layout.getChildAt(1);
+        //LinearLayout layout = (LinearLayout) view;
+        //TextView text = (TextView) layout.getChildAt(1);
+
+        TextView text = (TextView) view.findViewById(R.id.tvPriority);
         text.setText(cursor.getString(1) + "\n" + cursor.getString(2) + " ++ / " + cursor.getString(3) + " --");
     }
 
