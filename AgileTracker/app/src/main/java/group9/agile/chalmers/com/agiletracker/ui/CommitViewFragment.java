@@ -1,22 +1,16 @@
 package group9.agile.chalmers.com.agiletracker.ui;
 
-import android.app.Activity;
+import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import org.eclipse.egit.github.core.CommitFile;
-import org.eclipse.egit.github.core.IRepositoryIdProvider;
-import org.eclipse.egit.github.core.RepositoryId;
-import org.eclipse.egit.github.core.service.CommitService;
-
-import java.io.IOException;
-import java.util.List;
+import android.widget.ListView;
 
 import group9.agile.chalmers.com.agiletracker.R;
+import group9.agile.chalmers.com.agiletracker.common.view.CommitViewAdapter;
 import group9.agile.chalmers.com.agiletracker.network.CommitFilesTask;
 
 /**
@@ -27,20 +21,30 @@ import group9.agile.chalmers.com.agiletracker.network.CommitFilesTask;
  */
 public class CommitViewFragment extends Fragment {
 
+    private static final String FILENAME = "FileName";
+    private static final String ADDITIONS = "Additions";
+    private static final String DELETIONS = "Deletions";
     private OnFragmentInteractionListener mListener;
 
+    // Required empty public constructor
     public CommitViewFragment() {
-        // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        String sha="58dae94fbc9cc37fa1056b127297ab596ece4cd3"; //Hardcoded now, will get from the savedInstance
-        new CommitFilesTask().execute(sha);
 
-        return inflater.inflate(R.layout.fragment_commit_view, container, false);
+        String sha = "cca5db430fcc6486765f5d9d85b0e5d1a2026215"; //Hardcoded now, will get from the savedInstance
+
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_commit_view, container, false);
+        ListView list = (ListView) view.findViewById(R.id.tvBody);
+        MatrixCursor cursor = new MatrixCursor(new String[]{"_id", FILENAME, ADDITIONS, DELETIONS});
+        CommitViewAdapter adapter = new CommitViewAdapter(getActivity(), cursor);
+        list.setAdapter(adapter);
+        CommitFilesTask task = new CommitFilesTask(adapter, getActivity());
+        task.execute(sha);
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -70,5 +74,4 @@ public class CommitViewFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
-
 }
