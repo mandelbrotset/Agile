@@ -79,7 +79,6 @@ public class CommitViewFragment extends Fragment {
                 getActivity(),android.R.layout.simple_spinner_item, spinnerList);
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dropDownList.setAdapter(dataAdapter);
         new ListRepositoriesTask().execute(SHA);
 

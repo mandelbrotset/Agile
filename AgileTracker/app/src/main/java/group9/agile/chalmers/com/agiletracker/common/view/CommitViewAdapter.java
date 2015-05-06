@@ -31,15 +31,12 @@ public class CommitViewAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.fragment_commit_view, parent, false);
+        return LayoutInflater.from(context).inflate(R.layout.commit_list_item, parent, false);
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        //LinearLayout layout = (LinearLayout) view;
-        //TextView text = (TextView) layout.getChildAt(1);
-
-        TextView text = (TextView) view.findViewById(R.id.tvPriority);
+         TextView text = (TextView) view.findViewById(R.id.tvPriority);
         text.setText(cursor.getString(1) + "\n" + cursor.getString(2) + " ++ / " + cursor.getString(3) + " --");
     }
 
