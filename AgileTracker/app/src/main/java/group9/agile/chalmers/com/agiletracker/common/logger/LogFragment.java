@@ -40,7 +40,18 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ScrollView;
+import android.widget.Spinner;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import group9.agile.chalmers.com.agiletracker.R;
+import group9.agile.chalmers.com.agiletracker.network.CommitFilesTask;
+import group9.agile.chalmers.com.agiletracker.network.GitHub;
 
 /**
  * Simple fraggment which contains a LogView and uses is to output log data it receives
@@ -86,8 +97,10 @@ public class LogFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View result = inflateViews();
+        //View result = inflateViews();
+        View view = inflater.inflate(R.layout.fragment_commit_view, container, false);
 
+        Log.e("test","BUTTON");
         mLogView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -100,8 +113,12 @@ public class LogFragment extends Fragment {
                 mScrollView.fullScroll(ScrollView.FOCUS_DOWN);
             }
         });
-        return result;
+        return view;
+        //return result;
     }
+
+
+
 
     public LogView getLogView() {
         return mLogView;

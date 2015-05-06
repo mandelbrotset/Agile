@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     android:orientation="vertical" >
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/tvBody"
@@ -14,3 +15,21 @@
         android:layout_marginLeft="10dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 </LinearLayout>
+=======
+    tools:context="group9.agile.chalmers.com.agiletracker.ui.CommitViewFragment">
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="right"
+        android:dropDownSelector="@color/accent_material_light" />
+
+    <TextView android:layout_width="match_parent" android:layout_height="497dp"
+        android:text="@string/hello_blank_fragment"
+        android:layout_gravity="bottom" />
+
+</FrameLayout>
+>>>>>>> working-branch-settings
