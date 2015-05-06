@@ -1,19 +1,15 @@
 package group9.agile.chalmers.com.agiletracker;
 
 import android.app.ActionBar;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import group9.agile.chalmers.com.agiletracker.common.notification.GithubChangesTracker;
 import group9.agile.chalmers.com.agiletracker.common.view.SampleFragmentPagerAdapter;
 import group9.agile.chalmers.com.agiletracker.common.view.SlidingTabLayout;
-import group9.agile.chalmers.com.agiletracker.ui.PokerGameFragment;
-import group9.agile.chalmers.com.agiletracker.ui.SlidingTabsBasicFragment;
-
 
 public class MainActivity extends FragmentActivity {
 
@@ -63,7 +59,7 @@ public class MainActivity extends FragmentActivity {
             }
         };
 
-
+        new GithubChangesTracker(this).start();
     }
 
     @Override
