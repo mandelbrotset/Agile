@@ -1,120 +1,69 @@
 package group9.agile.chalmers.com.agiletracker;
 
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.app.ActionBar;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
-import group9.agile.chalmers.com.agiletracker.network.GitHub;
+import group9.agile.chalmers.com.agiletracker.common.view.SampleFragmentPagerAdapter;
+import group9.agile.chalmers.com.agiletracker.common.view.SlidingTabLayout;
+import group9.agile.chalmers.com.agiletracker.ui.PokerGameFragment;
+import group9.agile.chalmers.com.agiletracker.ui.SlidingTabsBasicFragment;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends FragmentActivity {
 
-    TextView textView;
+    ViewPager mViewPager;
+
     /** Called when the user clicks the Send button */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final ActionBar actionBar = getActionBar();
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // Get the ViewPager and set it's PagerAdapter so that it can display items
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager(),
+                MainActivity.this));
 
-        new GitHub().execute("alma-castant");
-        Button button=(Button)findViewById(R.id.button);
-        Button button1 =(Button)findViewById(R.id.button1);
-        Button button2 =(Button)findViewById(R.id.button2);
-        Button button3 =(Button)findViewById(R.id.button3);
-        Button button4 =(Button)findViewById(R.id.button4);
-        Button button5 =(Button)findViewById(R.id.button5);
-        Button button6 =(Button)findViewById(R.id.button6);
-        Button button7 =(Button)findViewById(R.id.button7);
-        Button button8 =(Button)findViewById(R.id.button8);
-        // Button button9 =(Button)findViewById(R.id.button9);
+        // Give the SlidingTabLayout the ViewPager
+        SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        // Center the tabs in the layout
+        slidingTabLayout.setDistributeEvenly(true);
+        slidingTabLayout.setViewPager(viewPager);
 
-        button.setOnClickListener(new View.OnClickListener() {
+
+
+        // Specify that tabs should be displayed in the action bar.
+       // actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        // Create a tab listener that is called when the user changes tabs.
+        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+
+
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MessageDisplay.class);
-                intent.putExtra("Number", 1);
-                startActivity(intent);
+            public void onTabSelected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
 
             }
-        });
-        button1.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View v) {
-                Intent intent =new Intent(getApplicationContext(), MessageDisplay.class);
-                intent.putExtra("Number", 2);
-                startActivity(intent);
-            }
-        });
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MessageDisplay.class);
-                intent.putExtra("Number", 3);
-                startActivity(intent);
+            public void onTabUnselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
 
             }
-        });
-        button3.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MessageDisplay.class);
-                intent.putExtra("Number", 4);
-                startActivity(intent);
+            public void onTabReselected(ActionBar.Tab tab, android.app.FragmentTransaction ft) {
 
             }
-        });
-        button4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MessageDisplay.class);
-                intent.putExtra("Number", 5);
-                startActivity(intent);
+        };
 
-            }
-        });
-        button5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MessageDisplay.class);
-                intent.putExtra("Number", 6);
-                startActivity(intent);
 
-            }
-        });
-        button6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MessageDisplay.class);
-                intent.putExtra("Number", 7);
-                startActivity(intent);
-
-            }
-        });
-        button7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MessageDisplay.class);
-                intent.putExtra("Number", 8);
-                startActivity(intent);
-
-            }
-        });
-        button8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MessageDisplay.class);
-                intent.putExtra("Number", 9);
-                startActivity(intent);
-
-            }
-        });
-
-        textView= (TextView) findViewById(R.id.textView);
     }
 
     @Override

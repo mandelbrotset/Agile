@@ -3,4 +3,17 @@
 
     <string name="hello_world">Enter Score!</string>
     <string name="action_settings">Settings</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="intro_message">
+        <![CDATA[
+
+
+            A basic sample which shows how to use SlidingTabLayout to display a custom
+            ViewPager title strip which gives continuous feedback to the user when scrolling.
+
+
+        ]]>
+    </string>
 </resources>
