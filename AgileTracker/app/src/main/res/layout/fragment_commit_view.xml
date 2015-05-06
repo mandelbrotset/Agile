@@ -7,7 +7,7 @@
 
     <Spinner
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="60dp"
         android:id="@+id/spinner"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -29,6 +29,5 @@
         android:layout_marginLeft="10dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    '
 
 </RelativeLayout>
