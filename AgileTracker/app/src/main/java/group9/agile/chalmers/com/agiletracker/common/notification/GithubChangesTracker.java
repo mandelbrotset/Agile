@@ -53,7 +53,7 @@ public class GithubChangesTracker extends Thread {
     }
 
     private void checkChanges() {
-        android.util.Log.d("commits", "Checking for new commits..");
+        android.util.Log.d("commits", "Checking for new commits...");
         try {
             List<Repository> repos=service.getRepositories("mandelbrotset");
             for (Repository repo : repos) {
