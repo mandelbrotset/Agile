@@ -8,9 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-<<<<<<< HEAD
 import android.widget.ListView;
-=======
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,7 +22,6 @@ import org.eclipse.egit.github.core.service.CommitService;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
->>>>>>> working-branch-settings
 
 import group9.agile.chalmers.com.agiletracker.R;
 import group9.agile.chalmers.com.agiletracker.common.view.CommitViewAdapter;
@@ -60,16 +57,12 @@ public class CommitViewFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_commit_view, container, false);
-<<<<<<< HEAD
         ListView list = (ListView) view.findViewById(R.id.tvBody);
         MatrixCursor cursor = new MatrixCursor(new String[]{"_id", FILENAME, ADDITIONS, DELETIONS});
         CommitViewAdapter adapter = new CommitViewAdapter(getActivity(), cursor);
         list.setAdapter(adapter);
         CommitFilesTask task = new CommitFilesTask(adapter, getActivity());
         task.execute(sha);
-
-        return view;
-=======
 
         setupSpinner(view);
 
@@ -114,7 +107,6 @@ public class CommitViewFragment extends Fragment {
         spinnerList.clear();
         spinnerList.addAll(branches);
         dataAdapter.notifyDataSetChanged();
->>>>>>> working-branch-settings
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -144,8 +136,4 @@ public class CommitViewFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> working-branch-settings
