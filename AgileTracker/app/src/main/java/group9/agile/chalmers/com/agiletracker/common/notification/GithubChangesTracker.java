@@ -2,36 +2,26 @@ package group9.agile.chalmers.com.agiletracker.common.notification;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.os.AsyncTask;
 
 import org.eclipse.egit.github.core.Commit;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryId;
 import org.eclipse.egit.github.core.client.GitHubClient;
-import org.eclipse.egit.github.core.client.GitHubRequest;
-import org.eclipse.egit.github.core.client.GitHubResponse;
 import org.eclipse.egit.github.core.service.CommitService;
-import org.eclipse.egit.github.core.service.GitHubService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.security.KeyRep;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Executor;
-
-import group9.agile.chalmers.com.agiletracker.MainActivity;
-import group9.agile.chalmers.com.agiletracker.common.logger.Log;
 
 /**
  * Created by isak & Sarah on 4/28/15.
  */
 public class GithubChangesTracker extends Thread {
 //c3ce0e09bd107561527d7f104aebcee12367f2d3    --OAUTH key
-    private static final int DELAY = 10000;
+
+    // Set in millis
+    private static final int UPDATE_INTERVAL = 5*60*1000;
     private GitHubClient client;
     private RepositoryService service;
     private CommitService commitService;
@@ -79,7 +69,7 @@ public class GithubChangesTracker extends Thread {
     public void run() {
         while (!this.isInterrupted()) {
             try {
-                Thread.sleep(DELAY);
+                Thread.sleep(UPDATE_INTERVAL);
                 checkChanges();
             } catch (InterruptedException e) {
                 e.printStackTrace();
