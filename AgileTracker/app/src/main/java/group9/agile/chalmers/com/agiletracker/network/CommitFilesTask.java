@@ -6,20 +6,24 @@ import android.os.AsyncTask;
 
 import org.eclipse.egit.github.core.CommitFile;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
+import org.eclipse.egit.github.core.RepositoryCommit;
 import org.eclipse.egit.github.core.RepositoryId;
 import org.eclipse.egit.github.core.service.CommitService;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import group9.agile.chalmers.com.agiletracker.common.Resources;
 import group9.agile.chalmers.com.agiletracker.common.view.CommitViewAdapter;
 import group9.agile.chalmers.com.agiletracker.exceptions.TaskNotCreatedException;
 
 /**
  * Created by Malin and Alma on 24/04/2015.
  */
-public class CommitFilesTask extends AsyncTask<String, Void, List<CommitFile>> {
+public class CommitFilesTask extends AsyncTask<String, Void, List<RepositoryCommit>> {
 
     private CommitViewAdapter adapter;
     private Activity parent;
@@ -39,15 +43,16 @@ public class CommitFilesTask extends AsyncTask<String, Void, List<CommitFile>> {
     }
 
     @Override
-    protected List<CommitFile> doInBackground(String... params) {
+    protected List<RepositoryCommit> doInBackground(String... params) {
 
         CommitService commitService = new CommitService();
         String sha = params[0];
 
         IRepositoryIdProvider repositoryId = RepositoryId.create("mandelbrotset", "Agile"); //Hardcoded now, will get from the savedInstance
-        List<CommitFile> commitFiles = new ArrayList<CommitFile>();
+        List<RepositoryCommit> commitFiles = new ArrayList<RepositoryCommit>();
         try {
-            commitFiles = commitService.getCommit(repositoryId, sha).getFiles();
+
+            commitFiles = commitService.getCommits(repositoryId);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,14 +60,20 @@ public class CommitFilesTask extends AsyncTask<String, Void, List<CommitFile>> {
         return commitFiles;
     }
 
-    protected void onPostExecute(List<CommitFile> commitFiles) {
+    protected void onPostExecute(List<RepositoryCommit> commitList) {
 
-        String[] columnNames = {"_id", "FileName", "Additions", "Deletions"};
+        String[] columnNames = {"_id", Resources.COMMIT_MESSAGE, Resources.COMMIT_AUTHOR, Resources.COMMIT_DATE};
         MatrixCursor matrixCursor = new MatrixCursor(columnNames);
         long id = 0;
-        for (CommitFile file : commitFiles) {
-            String fileName = file.getFilename();
-            matrixCursor.addRow(new Object[]{id, fileName, file.getAdditions(), file.getDeletions()});
+        for (RepositoryCommit commit : commitList) {
+            String commitMessage = commit.getCommit().getMessage();
+            String author = commit.getAuthor().getLogin();
+
+            Date date = commit.getCommit().getAuthor().getDate();
+            SimpleDateFormat dt1 = new SimpleDateFormat("dd/MM");
+
+            matrixCursor.addRow(new Object[]{id, commitMessage, author, dt1.format(date)});
+           // matrixCursor.addRow(new Object[]{id, fileName, file.getAdditions(), file.getDeletions()});
             id++;
         }
         adapter.updateCursor(matrixCursor);

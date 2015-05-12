@@ -58,12 +58,12 @@ public class CommitViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        String sha = "cca5db430fcc6486765f5d9d85b0e5d1a2026215"; //Hardcoded now, will get from the savedInstance
+        String sha = "30650ff0479fc71a04ff9692ad02e30402d84257"; //Hardcoded now, will get from the savedInstance
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_commit_view, container, false);
         ListView list = (ListView) view.findViewById(R.id.tvBody);
-        MatrixCursor cursor = new MatrixCursor(new String[]{"_id", Resources.FILENAME, Resources.ADDITIONS, Resources.DELETIONS});
+        MatrixCursor cursor = new MatrixCursor(new String[]{"_id", Resources.COMMIT_MESSAGE, Resources.COMMIT_AUTHOR, Resources.COMMIT_DATE});
         CommitViewAdapter adapter = new CommitViewAdapter(getActivity(), cursor);
         list.setAdapter(adapter);
         CommitFilesTask task = new CommitFilesTask(adapter, getActivity());
