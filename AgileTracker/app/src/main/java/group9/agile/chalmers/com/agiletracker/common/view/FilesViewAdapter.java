@@ -13,40 +13,30 @@ import android.widget.TextView;
 import group9.agile.chalmers.com.agiletracker.R;
 
 /**
- * Created by Malin and Alma on 05/05/15.
+ * Created by Malin and Alma on 12/05/15.
  */
-public class CommitViewAdapter extends CursorAdapter {
+public class FilesViewAdapter extends CursorAdapter {
+
     /**
      * Constructor for CommitViewAdapter
      *
      * @param context Application context
      * @param c       Cursor for list of file names and their additions and deletions
      */
-    public CommitViewAdapter(Context context, Cursor c) {
+    public FilesViewAdapter (Context context, Cursor c) {
         super(context, c, false);
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.commit_list_item, parent, false);
+        return LayoutInflater.from(context).inflate(R.layout.commit_files_item, parent, false);
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
-        TextView name = (TextView) view.findViewById(R.id.tvPriorityTitle);
-        name.setText(cursor.getString(1));
-
-        TextView info = (TextView) view.findViewById(R.id.tvPriorityInfo);
-        info.setText(cursor.getString(2));
-
-        TextView date = (TextView) view.findViewById(R.id.tvPriorityDate);
-        date.setText(cursor.getString(3));
-
-        ListView listView = (ListView) view.findViewById(R.id.tvFilesList);
-        listView.setVisibility(View.GONE);
-
-        view.setOnClickListener(new OnListClickListener(cursor.getString(4), listView, context));
+        TextView text = (TextView) view.findViewById(R.id.tvPriority);
+        text.setText(cursor.getString(1) + "\n" + cursor.getString(2) + " ++ / " + cursor.getString(3) + " --");
     }
 
     public void updateCursor(Cursor cursor) {

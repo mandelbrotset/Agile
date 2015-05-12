@@ -9,6 +9,7 @@ public class Resources {
     public static final String COMMIT_MESSAGE="CommitMessage";
     public static final String COMMIT_AUTHOR="CommitAuthor";
     public static final String COMMIT_DATE="CommitDate";
+    public static final String COMMIT_SHA="CommitSha";
     public static final String ADDITIONS = "Additions";
     public static final String DELETIONS = "Deletions";
     public static final String BRANCH_NAME="Branch_name";

@@ -13,17 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.eclipse.egit.github.core.CommitFile;
-import org.eclipse.egit.github.core.IRepositoryIdProvider;
-import org.eclipse.egit.github.core.RepositoryId;
-import org.eclipse.egit.github.core.service.CommitService;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +23,7 @@ import group9.agile.chalmers.com.agiletracker.R;
 import group9.agile.chalmers.com.agiletracker.common.Resources;
 import group9.agile.chalmers.com.agiletracker.common.view.CommitViewAdapter;
 import group9.agile.chalmers.com.agiletracker.exceptions.TaskNotCreatedException;
-import group9.agile.chalmers.com.agiletracker.network.CommitFilesTask;
-import group9.agile.chalmers.com.agiletracker.network.GitHub;
+import group9.agile.chalmers.com.agiletracker.network.CommitListTask;
 import group9.agile.chalmers.com.agiletracker.network.ListRepositoriesTask;
 
 /**
@@ -63,10 +54,10 @@ public class CommitViewFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_commit_view, container, false);
         ListView list = (ListView) view.findViewById(R.id.tvBody);
-        MatrixCursor cursor = new MatrixCursor(new String[]{"_id", Resources.COMMIT_MESSAGE, Resources.COMMIT_AUTHOR, Resources.COMMIT_DATE});
+        MatrixCursor cursor = new MatrixCursor(new String[]{"_id", Resources.COMMIT_MESSAGE, Resources.COMMIT_AUTHOR, Resources.COMMIT_DATE, Resources.COMMIT_SHA});
         CommitViewAdapter adapter = new CommitViewAdapter(getActivity(), cursor);
         list.setAdapter(adapter);
-        CommitFilesTask task = new CommitFilesTask(adapter, getActivity());
+        CommitListTask task = new CommitListTask(adapter);
         task.execute(sha);
         setupSpinner(view);
 
@@ -100,7 +91,7 @@ public class CommitViewFragment extends Fragment {
 
                 //Update the view
                 try {
-                    CommitFilesTask.getTask().execute();
+                    CommitListTask.getTask().execute();
                 } catch (TaskNotCreatedException e) {
                     e.printStackTrace();
                     //See if we need to throw it further
