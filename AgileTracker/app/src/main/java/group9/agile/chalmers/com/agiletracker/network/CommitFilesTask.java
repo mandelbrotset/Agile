@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import group9.agile.chalmers.com.agiletracker.common.view.CommitViewAdapter;
+import group9.agile.chalmers.com.agiletracker.exceptions.TaskNotCreatedException;
 
 /**
  * Created by Malin and Alma on 24/04/2015.
@@ -23,9 +24,18 @@ public class CommitFilesTask extends AsyncTask<String, Void, List<CommitFile>> {
     private CommitViewAdapter adapter;
     private Activity parent;
 
+    private static CommitFilesTask singletonTask=null;
+
     public CommitFilesTask(CommitViewAdapter adapter, Activity parent) {
         this.adapter = adapter;
         this.parent = parent;
+    }
+
+    public static CommitFilesTask getTask () throws TaskNotCreatedException {
+        if(singletonTask==null){
+            throw new TaskNotCreatedException();
+        }
+        return singletonTask;
     }
 
     @Override
