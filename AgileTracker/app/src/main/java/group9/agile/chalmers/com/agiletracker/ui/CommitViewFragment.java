@@ -77,6 +77,16 @@ public class CommitViewFragment extends Fragment {
         dropDownList.setAdapter(dataAdapter);
         new ListRepositoriesTask().execute(SHA);
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String branchName = preferences.getString(Resources.BRANCH_NAME, "");
+        if(!branchName.equals("")){
+            for (int i = 0 ; i<dropDownList.getCount() ; i++){
+                if (dropDownList.getItemAtPosition(i).equals(branchName)){
+                    dropDownList.setSelection(i);
+                }
+            }
+        }
+
         dropDownList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             // Is called each time the current item is changed
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -85,7 +95,7 @@ public class CommitViewFragment extends Fragment {
                 //Store the branch name in the preferences
                 TextView textView = (TextView) view;
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                SharedPreferences.Editor editor= preferences.edit();
+                SharedPreferences.Editor editor = preferences.edit();
                 editor.putString(Resources.BRANCH_NAME, textView.getText().toString());
                 editor.commit();
 
