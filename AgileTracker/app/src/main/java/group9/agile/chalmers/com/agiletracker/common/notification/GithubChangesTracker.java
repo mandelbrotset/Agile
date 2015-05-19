@@ -28,7 +28,7 @@ public class GithubChangesTracker extends Thread {
 //c3ce0e09bd107561527d7f104aebcee12367f2d3    --OAUTH key
 
     // Set in millis
-    private static final int UPDATE_INTERVAL = 5*60*10;
+    private static final int UPDATE_INTERVAL = 5*60*1000;
     private GitHubClient client;
     private RepositoryService service;
     private CommitService commitService;
