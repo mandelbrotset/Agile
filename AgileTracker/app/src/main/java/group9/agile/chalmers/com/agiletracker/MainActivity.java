@@ -1,5 +1,8 @@
 package group9.agile.chalmers.com.agiletracker;
 import android.view.View.OnKeyListener;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.app.ActionBar;
@@ -91,7 +94,7 @@ public class MainActivity extends FragmentActivity {
                         popupWindow.dismiss();
                     }
                 });
-                popupWindow.showAsDropDown(btnOpenPopup, 100, 100);
+                popupWindow.showAsDropDown(btnOpenPopup, 100, 300);
 
             }
         });
@@ -122,11 +125,11 @@ public class MainActivity extends FragmentActivity {
 
         //addKeyListener();
     }
-   /* public void addKeyListener() {
+    public void addKeyListener() {
 
         // get edittext component
         edittext = (EditText) findViewById(R.id.userName);
-
+        edittext.setImeOptions(EditorInfo.IME_ACTION_DONE);
         // add a key listener to keep track user input
         edittext.setOnKeyListener(new OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -142,7 +145,8 @@ public class MainActivity extends FragmentActivity {
                 return false;
             }
         });
-    }*/
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
