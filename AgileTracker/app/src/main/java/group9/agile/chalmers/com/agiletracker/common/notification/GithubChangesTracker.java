@@ -28,7 +28,7 @@ public class GithubChangesTracker extends Thread {
 //c3ce0e09bd107561527d7f104aebcee12367f2d3    --OAUTH key
 
     // Set in millis
-    private static final int UPDATE_INTERVAL = 5*60*1000;
+    private static final int UPDATE_INTERVAL = 5*60*10;
     private GitHubClient client;
     private RepositoryService service;
     private CommitService commitService;
@@ -65,12 +65,16 @@ public class GithubChangesTracker extends Thread {
                     //Compare selected branch commits
                     RepositoryCommitCompare commitCompare=commitService.compare(repositoryId, "master", currentBranch);
                     List<CommitFile> fileList = commitCompare.getFiles();
+                    List<CommitFile> branchFiles = commitService.getCommit(repositoryId, repositoryCommit.getSha()).getFiles();
 
-                    for(CommitFile file : commitService.getCommit(repositoryId, commit.getSha()).getFiles()){
-                        if(fileList.contains(file)){                                //Check equals
-                            android.util.Log.d("commits", "displaying new commit");
-                            displayCommit("Repo: " + repo.getName() + " - " + commit.getMessage().toString());
-                            displayedCommits.add(commit.getUrl());
+                    for(CommitFile branchFile : branchFiles){
+                        for(CommitFile file: fileList){
+                            if(branchFile.getFilename().equals(file.getFilename())){
+                                android.util.Log.d("commits", "displaying new commit");
+                                displayCommit("Repo: " + repo.getName() + " - " + commit.getMessage().toString());
+                                displayedCommits.add(commit.getUrl());
+                                return;
+                            }
                         }
                     }
                 }
