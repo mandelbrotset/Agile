@@ -34,19 +34,8 @@ public class CommitViewAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
-        TextView name = (TextView) view.findViewById(R.id.tvPriorityTitle);
-        name.setText(cursor.getString(1));
-
-        TextView info = (TextView) view.findViewById(R.id.tvPriorityInfo);
-        info.setText(cursor.getString(2));
-
-        TextView date = (TextView) view.findViewById(R.id.tvPriorityDate);
-        date.setText(cursor.getString(3));
-
-        ListView listView = (ListView) view.findViewById(R.id.tvFilesList);
-        listView.setVisibility(View.GONE);
-
-        view.setOnClickListener(new OnListClickListener(cursor.getString(4), listView, context));
+        TextView name = (TextView) view.findViewById(R.id.tvPriority);
+        name.setText(cursor.getString(1) + '\n' + cursor.getString(2) + '\n' + cursor.getString(3));
     }
 
     public void updateCursor(Cursor cursor) {

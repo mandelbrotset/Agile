@@ -44,11 +44,9 @@ public class CommitListTask extends AsyncTask<String, Void, List<RepositoryCommi
 
         CommitService commitService = new CommitService();
         String sha = params[0];
-
         IRepositoryIdProvider repositoryId = RepositoryId.create("mandelbrotset", "Agile"); //Hardcoded now, will get from the savedInstance
         List<RepositoryCommit> commitFiles = new ArrayList<RepositoryCommit>();
         try {
-
             commitFiles = commitService.getCommits(repositoryId);
         } catch (IOException e) {
             e.printStackTrace();
