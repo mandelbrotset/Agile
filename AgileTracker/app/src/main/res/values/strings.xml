@@ -2,10 +2,13 @@
     <string name="app_name">AgileTracker</string>
 
     <string name="hello_world">Enter Score!</string>
+
     <string name="action_settings">Settings</string>
+    <string name="user_name">Enter user name</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="intro_message">
         <![CDATA[
 
