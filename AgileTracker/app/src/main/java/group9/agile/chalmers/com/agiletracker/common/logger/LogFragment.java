@@ -40,18 +40,9 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ScrollView;
-import android.widget.Spinner;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import group9.agile.chalmers.com.agiletracker.R;
-import group9.agile.chalmers.com.agiletracker.network.CommitFilesTask;
-import group9.agile.chalmers.com.agiletracker.network.GitHub;
 
 /**
  * Simple fraggment which contains a LogView and uses is to output log data it receives

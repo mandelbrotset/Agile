@@ -12,25 +12,40 @@ import org.eclipse.egit.github.core.RepositoryId;
 import org.eclipse.egit.github.core.service.CommitService;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import group9.agile.chalmers.com.agiletracker.common.Resources;
 import group9.agile.chalmers.com.agiletracker.MainActivity;
 import group9.agile.chalmers.com.agiletracker.common.view.CommitViewAdapter;
+import group9.agile.chalmers.com.agiletracker.common.view.FilesViewAdapter;
+import group9.agile.chalmers.com.agiletracker.exceptions.TaskNotCreatedException;
 
 /**
- * Created by Malin and Alma on 24/04/2015.
+ * Created by Malin and Alma on 12/05/2015.
  */
 public class CommitFilesTask extends AsyncTask<String, Void, List<CommitFile>> {
 
-    private CommitViewAdapter adapter;
+    private FilesViewAdapter adapter;
+
     private Activity parent;
     private GithubServiceConnection gsc;
 
-    public CommitFilesTask(CommitViewAdapter adapter, Activity parent) {
+    private static CommitFilesTask singletonTask=null;
+
+    public CommitFilesTask(FilesViewAdapter adapter, Activity parent) {
         this.adapter = adapter;
         this.parent = parent;
         gsc = ((MainActivity)parent).getGithubServiceConnection();
+    }
+
+    public static CommitFilesTask getTask () throws TaskNotCreatedException {
+        if(singletonTask==null){
+            throw new TaskNotCreatedException();
+        }
+        return singletonTask;
     }
 
     @Override
@@ -38,6 +53,7 @@ public class CommitFilesTask extends AsyncTask<String, Void, List<CommitFile>> {
         String sha = params[0];
         IRepositoryIdProvider repositoryId = RepositoryId.create("mandelbrotset", "Agile"); //Hardcoded now, will get from the savedInstance
         List<CommitFile> commitFiles = new ArrayList<CommitFile>();
+
         RepositoryCommit commit = gsc.getCommit(repositoryId, sha);
         if (commit == null) {
             Log.d("commit", "service not started yet, cannot fetch commits..");
@@ -49,7 +65,7 @@ public class CommitFilesTask extends AsyncTask<String, Void, List<CommitFile>> {
 
     protected void onPostExecute(List<CommitFile> commitFiles) {
 
-        String[] columnNames = {"_id", "FileName", "Additions", "Deletions"};
+        String[] columnNames = {"_id", Resources.FILENAME, Resources.ADDITIONS, Resources.DELETIONS};
         MatrixCursor matrixCursor = new MatrixCursor(columnNames);
         long id = 0;
         for (CommitFile file : commitFiles) {
