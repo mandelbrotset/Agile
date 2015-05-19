@@ -1,29 +1,29 @@
 package group9.agile.chalmers.com.agiletracker;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import group9.agile.chalmers.com.agiletracker.common.logger.Log;
-import group9.agile.chalmers.com.agiletracker.common.notification.GithubChangesTracker;
+import group9.agile.chalmers.com.agiletracker.network.GithubBackendService;
 import group9.agile.chalmers.com.agiletracker.common.view.SampleFragmentPagerAdapter;
 import group9.agile.chalmers.com.agiletracker.common.view.SlidingTabLayout;
-import group9.agile.chalmers.com.agiletracker.ui.PokerGameFragment;
-import group9.agile.chalmers.com.agiletracker.ui.SlidingTabsBasicFragment;
+import group9.agile.chalmers.com.agiletracker.network.GithubServiceConnection;
 
 
 public class MainActivity extends FragmentActivity {
 
     ViewPager mViewPager;
+    GithubServiceConnection githubServiceConnection;
 
     /** Called when the user clicks the Send button */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        initGithubBackendService();
+
         final ActionBar actionBar = getActionBar();
 
         super.onCreate(savedInstanceState);
@@ -61,8 +61,21 @@ public class MainActivity extends FragmentActivity {
 
             }
         };
-        new GithubChangesTracker(this).start();
+    }
 
+    private void initGithubBackendService() {
+        githubServiceConnection = new GithubServiceConnection(this);
+        Intent serviceIntent = new Intent(this, GithubBackendService.class);
+        bindService(serviceIntent, githubServiceConnection, BIND_IMPORTANT);
+        startService(serviceIntent);
+    }
+
+    /**
+     * Gets the ServiceConnection to the GithubBackendService. Used to communicate with it.
+     * @return the ServiceConnection
+     */
+    public GithubServiceConnection getGithubServiceConnection() {
+        return githubServiceConnection;
     }
 
     @Override
@@ -70,6 +83,12 @@ public class MainActivity extends FragmentActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(githubServiceConnection);
     }
 
     @Override

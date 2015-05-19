@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import group9.agile.chalmers.com.agiletracker.MainActivity;
 import group9.agile.chalmers.com.agiletracker.R;
@@ -26,6 +27,12 @@ public class Notificator {
     }
 
     public static void displayNotification(String title, String text, int notificationColor, int ledColor, Activity targetActivity) {
+        Log.d("commit", "trying to display notification");
+        if (targetActivity == null) {
+            Log.d("commit", "targetActivity is null.. it should not be! now you missed a notification!");
+            return;
+        }
+        Log.d("commit", "displaying notification");
         NotificationCompat.Builder nb = new NotificationCompat.Builder(targetActivity.getApplicationContext());
         nb.setContentTitle(title);
         nb.setContentText(text);
