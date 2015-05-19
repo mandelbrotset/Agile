@@ -1,12 +1,16 @@
 package group9.agile.chalmers.com.agiletracker.network;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.eclipse.egit.github.core.Commit;
+import org.eclipse.egit.github.core.CommitFile;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryCommit;
+import org.eclipse.egit.github.core.RepositoryCommitCompare;
 import org.eclipse.egit.github.core.RepositoryId;
 import org.eclipse.egit.github.core.service.CommitService;
 import org.eclipse.egit.github.core.service.RepositoryService;
@@ -15,9 +19,9 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 
+import group9.agile.chalmers.com.agiletracker.common.Resources;
 import group9.agile.chalmers.com.agiletracker.MainActivity;
 import group9.agile.chalmers.com.agiletracker.common.notification.Notificator;
-
 /**
  * Created by isak & Sarah on 4/28/15.
  */
@@ -44,28 +48,50 @@ public class GithubChangesTracker extends Thread {
     private void checkChanges() {
         android.util.Log.d("commits", "Checking for new commits...");
         try {
-            List<Repository> repos=service.getRepositories("mandelbrotset");//TODO: Read from settings
+            List<Repository> repos = service.getRepositories("mandelbrotset");
             for (Repository repo : repos) {
                 List<RepositoryCommit> commits = gsc.getCommits(RepositoryId.create("mandelbrotset", repo.getName()));
                 if (commits == null) {
                     Log.d("commit", "service not started yet, cannot fetch commits..");
                     return;
                 }
-                Commit commit = commits.get(0).getCommit();//TODO: how many should we fetch?
+                // Commit commit = commits.get(0).getCommit();//TODO: how many should we fetch?
                 CommitService cs = new CommitService();
-                cs.getCommits(RepositoryId.create("mandelbrotset", "Agile"));//TODO: Read from settings
+                gsc.getCommits(RepositoryId.create("mandelbrotset", "Agile"));//TODO: Read from settings
 
-                if (!displayedCommits.contains(commit.getUrl())) {
-                    android.util.Log.d("commits", "displaying new commit");
-                    displayCommit("Repo: " + repo.getName() + " - " + commit.getMessage().toString());
-                    displayedCommits.add(commit.getUrl());
+
+                RepositoryId repositoryId = RepositoryId.create("mandelbrotset", repo.getName());
+                RepositoryCommit repositoryCommit = gsc.getCommits(repositoryId).get(0);
+                Commit commit = repositoryCommit.getCommit();
+
+                //Check differences between the selected branch (on settings) and master
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(changesDisplayer);
+                String currentBranch = preferences.getString(Resources.BRANCH_NAME, "");
+                if (!currentBranch.equals("") && !displayedCommits.contains(commit.getUrl())) {
+                    //Compare selected branch commits
+                    RepositoryCommitCompare commitCompare = cs.compare(repositoryId, "master", currentBranch);
+                    List<CommitFile> fileList = commitCompare.getFiles();
+                    List<CommitFile> branchFiles = gsc.getCommit(repositoryId, repositoryCommit.getSha()).getFiles();
+
+                    for (CommitFile branchFile : branchFiles) {
+                        for (CommitFile file : fileList) {
+                            if (branchFile.getFilename().equals(file.getFilename())) {
+                                android.util.Log.d("commits", "displaying new commit");
+                                displayCommit("Repo: " + repo.getName() + " - " + commit.getMessage().toString());
+                                displayedCommits.add(commit.getUrl());
+                                return;
+                            }
+                        }
+                    }
                 }
-             }
-        } catch (IOException e) {
-            android.util.Log.d("commits", e.getMessage());
-            e.printStackTrace();
+            }
+
+            }catch(IOException e){
+                android.util.Log.d("commits", e.getMessage());
+                e.printStackTrace();
+            }
         }
-    }
+
 
     protected void displayCommit(String text) {
         android.util.Log.d("commits", text);
