@@ -41,7 +41,7 @@ public class FileDialogFragment extends DialogFragment { //implements OnItemClic
 
         FilesViewAdapter adapter = new FilesViewAdapter(getActivity(), cursor);
         fileList.setAdapter(adapter);
-        CommitFilesTask task = new CommitFilesTask(adapter);
+        CommitFilesTask task = new CommitFilesTask(adapter, getActivity());
 
         task.execute(this.getArguments().getString("sha"));
 
