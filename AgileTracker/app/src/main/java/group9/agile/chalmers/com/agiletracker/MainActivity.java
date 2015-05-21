@@ -20,6 +20,7 @@ import android.widget.PopupWindow;
 import android.view.ViewGroup.LayoutParams;
 
 import group9.agile.chalmers.com.agiletracker.common.Resources;
+import group9.agile.chalmers.com.agiletracker.common.view.CommitViewAdapter;
 import group9.agile.chalmers.com.agiletracker.network.GithubBackendService;
 import group9.agile.chalmers.com.agiletracker.common.view.SampleFragmentPagerAdapter;
 import group9.agile.chalmers.com.agiletracker.common.view.SlidingTabLayout;
@@ -31,6 +32,7 @@ public class MainActivity extends FragmentActivity {
     ViewPager mViewPager;
     GithubServiceConnection githubServiceConnection;
     SampleFragmentPagerAdapter adapter;
+
     public SampleFragmentPagerAdapter getAdapter(){
         return adapter;
     }

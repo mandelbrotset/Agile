@@ -1,6 +1,7 @@
 package group9.agile.chalmers.com.agiletracker.ui;
 
 import android.content.SharedPreferences;
+import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,6 +15,8 @@ import android.widget.EditText;
 import group9.agile.chalmers.com.agiletracker.MainActivity;
 import group9.agile.chalmers.com.agiletracker.R;
 import group9.agile.chalmers.com.agiletracker.common.Resources;
+import group9.agile.chalmers.com.agiletracker.common.view.CommitViewAdapter;
+import group9.agile.chalmers.com.agiletracker.network.CommitListTask;
 import group9.agile.chalmers.com.agiletracker.network.GithubServiceConnection;
 
 /**
@@ -54,6 +57,11 @@ public class LoginFragment extends Fragment {
                 editor.putString(Resources.USER_REPO, repoName);
                 editor.putString(Resources.USER_REPO_OWNER, repoOwner);
                 editor.commit();
+
+                MatrixCursor cursor = new MatrixCursor(new String[]{"_id", Resources.COMMIT_MESSAGE, Resources.COMMIT_AUTHOR, Resources.COMMIT_DATE, Resources.COMMIT_SHA});
+                CommitViewAdapter adapter = new CommitViewAdapter(getActivity(), cursor);
+                CommitListTask task = new CommitListTask(adapter);
+                task.execute("");
 
                 MainActivity activity=(MainActivity)getActivity();
                 activity.getAdapter().notifyDataSetChanged();
