@@ -64,7 +64,7 @@ public class GithubBackendService extends Service {
             }
             try {
                 List<RepositoryCommit> commits = commitService.getCommits(repository);
-                Log.d("commit", "commits fetched succesfully");
+                Log.d("commit", "commits fetched successfully");
                 return commits;
             } catch (IOException e) {
                 Log.d("commit", e.getMessage());
@@ -122,7 +122,6 @@ public class GithubBackendService extends Service {
     public class startGitHubChangesTracker extends TimerTask {
         @Override
         public void run() {
-            //binder.login("","");//TODO: read from settings here! no, it is done from LoginFragment
             binder.startGithubChangesTracker();
         }
     }

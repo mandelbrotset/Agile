@@ -14,6 +14,7 @@ import android.widget.EditText;
 import group9.agile.chalmers.com.agiletracker.MainActivity;
 import group9.agile.chalmers.com.agiletracker.R;
 import group9.agile.chalmers.com.agiletracker.common.Resources;
+import group9.agile.chalmers.com.agiletracker.network.GithubServiceConnection;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +42,7 @@ public class LoginFragment extends Fragment {
         final String userName=((EditText)view.findViewById(R.id.input_username)).getText().toString();
         final String password=((EditText)view.findViewById(R.id.input_password)).getText().toString();
         final String repoName=((EditText)view.findViewById(R.id.input_reponame)).getText().toString();
+        final String repoOwner=((EditText)view.findViewById(R.id.input_repo_owner)).getText().toString();
         acceptButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,10 +52,13 @@ public class LoginFragment extends Fragment {
                 editor.putString(Resources.USER_NAME, userName);
                 editor.putString(Resources.USER_PASSWORD, password);
                 editor.putString(Resources.USER_REPO, repoName);
+                editor.putString(Resources.USER_REPO_OWNER, repoOwner);
                 editor.commit();
 
                 MainActivity activity=(MainActivity)getActivity();
                 activity.getAdapter().notifyDataSetChanged();
+                GithubServiceConnection gsc = activity.getGithubServiceConnection();
+                gsc.login(userName, password);
             }
         });
 
