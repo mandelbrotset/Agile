@@ -45,8 +45,13 @@ public class MainActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button acceptButton=(Button)findViewById(R.id.button_logout);
-        acceptButton.setOnClickListener(new Button.OnClickListener() {
+        Button logoutButton=(Button)findViewById(R.id.button_logout);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        if(!preferences.getBoolean(Resources.LOGGED_IN, false)){
+            logoutButton.setVisibility(View.INVISIBLE);
+        }
+
+        logoutButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
