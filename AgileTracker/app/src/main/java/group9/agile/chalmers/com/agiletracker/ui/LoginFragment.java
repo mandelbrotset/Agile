@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import group9.agile.chalmers.com.agiletracker.MainActivity;
 import group9.agile.chalmers.com.agiletracker.R;
 import group9.agile.chalmers.com.agiletracker.common.Resources;
 
@@ -51,7 +52,8 @@ public class LoginFragment extends Fragment {
                 editor.putString(Resources.USER_REPO, repoName);
                 editor.commit();
 
-
+                MainActivity activity=(MainActivity)getActivity();
+                activity.getAdapter().notifyDataSetChanged();
             }
         });
 

@@ -2,6 +2,8 @@ package group9.agile.chalmers.com.agiletracker;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.view.ViewGroup.LayoutParams;
 
+import group9.agile.chalmers.com.agiletracker.common.Resources;
 import group9.agile.chalmers.com.agiletracker.network.GithubBackendService;
 import group9.agile.chalmers.com.agiletracker.common.view.SampleFragmentPagerAdapter;
 import group9.agile.chalmers.com.agiletracker.common.view.SlidingTabLayout;
@@ -41,6 +44,22 @@ public class MainActivity extends FragmentActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button acceptButton=(Button)findViewById(R.id.button_logout);
+        acceptButton.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putBoolean(Resources.LOGGED_IN, false);
+                editor.commit();
+
+                adapter.notifyDataSetChanged();
+
+
+            }
+        });
+
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         adapter=new SampleFragmentPagerAdapter(getSupportFragmentManager(),MainActivity.this);
