@@ -122,7 +122,7 @@ public class GithubBackendService extends Service {
     public class startGitHubChangesTracker extends TimerTask {
         @Override
         public void run() {
-            binder.login("","");//TODO: read from settings here!
+            //binder.login("","");//TODO: read from settings here! no, it is done from LoginFragment
             binder.startGithubChangesTracker();
         }
     }
