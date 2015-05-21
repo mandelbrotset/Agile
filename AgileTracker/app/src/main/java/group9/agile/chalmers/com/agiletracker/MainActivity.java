@@ -5,9 +5,19 @@ import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.PopupWindow;
+import android.view.ViewGroup.LayoutParams;
 
+import group9.agile.chalmers.com.agiletracker.common.StateManager;
 import group9.agile.chalmers.com.agiletracker.network.GithubBackendService;
 import group9.agile.chalmers.com.agiletracker.common.view.SampleFragmentPagerAdapter;
 import group9.agile.chalmers.com.agiletracker.common.view.SlidingTabLayout;
@@ -18,6 +28,8 @@ public class MainActivity extends FragmentActivity {
 
     ViewPager mViewPager;
     GithubServiceConnection githubServiceConnection;
+    //@Inject StateManager stateManager;
+    StateManager stateManager = StateManager.getInstance();
 
     /** Called when the user clicks the Send button */
     @Override
@@ -104,5 +116,54 @@ public class MainActivity extends FragmentActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void loginPopUp() {
+        MainActivity.this.runOnUiThread(new Runnable() {
+            public void run() {
+                try {
+                    LayoutInflater layoutInflater
+                            = (LayoutInflater) getBaseContext()
+                            .getSystemService(LAYOUT_INFLATER_SERVICE);
+                    View popupView = layoutInflater.inflate(R.layout.login_popup,
+                            (ViewGroup) findViewById(R.id.login_root));
+                    final PopupWindow popupWindow = new PopupWindow(
+                            popupView,
+                            LayoutParams.FILL_PARENT,
+                            LayoutParams.FILL_PARENT);
+
+                    // Input fields
+                    final EditText inputUsername = (EditText) popupView.findViewById(R.id.input_username);
+                    final EditText inputPassword = (EditText) popupView.findViewById(R.id.input_password);
+                    final EditText inputRepoName = (EditText) popupView.findViewById(R.id.input_reponame);
+
+                    // Buttons
+                    Button btnLogin = (Button) popupView.findViewById(R.id.button_login);
+                    btnLogin.setOnClickListener(new Button.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            stateManager.setUserName(inputUsername.getText().toString());
+                            stateManager.setPassword(inputPassword.getText().toString());
+                            stateManager.setCurrentRepoName(inputRepoName.getText().toString());
+                            popupWindow.dismiss();
+                            Log.v("login", stateManager.getUserName() + " " + stateManager.getPassword()
+                                    + " " + stateManager.getCurrentRepoName());
+                        }
+                    });
+
+                    Button btnCancel = (Button) popupView.findViewById(R.id.button_cancel);
+                    btnCancel.setOnClickListener(new Button.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            popupWindow.dismiss();
+                        }
+                    });
+
+                    popupWindow.showAtLocation(popupView, Gravity.CENTER,0,0);
+                } catch (NullPointerException e) {
+                    Log.e("gui", "Couln not display login screen\n" + e.toString());
+                }
+            }
+        });
     }
 }

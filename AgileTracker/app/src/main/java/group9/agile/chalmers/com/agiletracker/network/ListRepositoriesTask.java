@@ -11,12 +11,19 @@ import org.eclipse.egit.github.core.service.RepositoryService;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
+
+import group9.agile.chalmers.com.agiletracker.common.StateManager;
 import group9.agile.chalmers.com.agiletracker.ui.CommitViewFragment;
 
 /**
  * Created by Mikael Friederici on 05/05/15.
  */
 public class ListRepositoriesTask extends AsyncTask<String, Void, List<RepositoryBranch>> {
+    //@Inject
+    //StateManager stateManager;
+    StateManager stateManager = StateManager.getInstance();
 
     @Override
     protected List<RepositoryBranch> doInBackground(String... params) {
@@ -41,6 +48,7 @@ public class ListRepositoriesTask extends AsyncTask<String, Void, List<Repositor
             branchNames.add(branch.getName());
             Log.v("adding branch",branch.getName());
         }
-        CommitViewFragment.updateBranchList(branchNames);
+        stateManager.setBranchList(branchNames);
+        CommitViewFragment.updateBranchList();
     }
 }

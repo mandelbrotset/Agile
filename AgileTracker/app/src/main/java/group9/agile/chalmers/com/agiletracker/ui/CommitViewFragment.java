@@ -1,8 +1,7 @@
 package group9.agile.chalmers.com.agiletracker.ui;
 
-import android.app.Dialog;
+import android.app.Activity;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,15 +17,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.eclipse.egit.github.core.RepositoryBranch;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import group9.agile.chalmers.com.agiletracker.MainActivity;
 import group9.agile.chalmers.com.agiletracker.R;
 import group9.agile.chalmers.com.agiletracker.common.Resources;
+import group9.agile.chalmers.com.agiletracker.common.StateManager;
 import group9.agile.chalmers.com.agiletracker.common.view.CommitViewAdapter;
 import group9.agile.chalmers.com.agiletracker.exceptions.TaskNotCreatedException;
 import group9.agile.chalmers.com.agiletracker.network.CommitListTask;
@@ -40,8 +40,11 @@ import group9.agile.chalmers.com.agiletracker.network.ListRepositoriesTask;
  */
 public class CommitViewFragment extends Fragment {
     private Spinner dropDownList;
+    private MainActivity gui;
     //private static String SHA = "58dae94fbc9cc37fa1056b127297ab596ece4cd3";
-    private static List<String> spinnerList = new ArrayList<>();
+    //@Inject
+    //StateManager stateManager;
+    StateManager stateManager = StateManager.getInstance();
     private static ArrayAdapter<String> dataAdapter;
 
 
@@ -95,14 +98,21 @@ public class CommitViewFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        gui = (MainActivity) activity;
+    }
+
     /**
      * Setup the drop down list(spinner) that displays all the branches
      * @param view
      */
     private void setupSpinner(View view){
+
         dropDownList = (Spinner) view.findViewById(R.id.spinner);
         dataAdapter = new ArrayAdapter<String>(
-                getActivity(),android.R.layout.simple_spinner_item, spinnerList);
+                getActivity(),android.R.layout.simple_spinner_item, stateManager.getBranchList());
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dropDownList.setAdapter(dataAdapter);
@@ -137,28 +147,24 @@ public class CommitViewFragment extends Fragment {
 
                     CommitListTask.getTask().execute();
 
+
                 } catch (TaskNotCreatedException e) {
                     e.printStackTrace();
                     //See if we need to throw it further
                 }
             }
 
+
             public void onNothingSelected(AdapterView<?> arg0) {
             }
         });
+        gui.loginPopUp();
     }
 
     /**
      * Update the spinner with the branch list.
      */
-    public static void updateBranchList(ArrayList<String> branches){
-        if(branches == null) {
-            Log.e("branch","GUI: error branch list is null");
-            return;
-        }
-
-        spinnerList.clear();
-        spinnerList.addAll(branches);
+    public static void updateBranchList(){
         dataAdapter.notifyDataSetChanged();
     }
 
