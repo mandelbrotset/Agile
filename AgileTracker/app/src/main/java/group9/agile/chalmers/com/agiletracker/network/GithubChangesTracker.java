@@ -46,9 +46,11 @@ public class GithubChangesTracker extends Thread {
     }
 
     private void checkChanges() {
+        new ListRepositoriesTask().execute(Resources.BRANCH_SHA);//TODO: unuglyize this!
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(changesDisplayer);
         String repoOwner = prefs.getString(Resources.USER_REPO_OWNER, "");
         String repoName = prefs.getString(Resources.USER_REPO, "");
+        if (repoName.isEmpty() || repoOwner.isEmpty()) return; //this makes no sense if they are not set
         android.util.Log.d("commits", "Checking for new commits...");
         try {
             List<Repository> repos = service.getRepositories(repoOwner);
