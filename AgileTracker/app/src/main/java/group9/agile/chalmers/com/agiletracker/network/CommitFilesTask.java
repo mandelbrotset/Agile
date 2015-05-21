@@ -1,8 +1,10 @@
 package group9.agile.chalmers.com.agiletracker.network;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.database.MatrixCursor;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.eclipse.egit.github.core.CommitFile;
@@ -51,7 +53,8 @@ public class CommitFilesTask extends AsyncTask<String, Void, List<CommitFile>> {
     @Override
     protected List<CommitFile> doInBackground(String... params) {
         String sha = params[0];
-        IRepositoryIdProvider repositoryId = RepositoryId.create("mandelbrotset", "Agile"); //Hardcoded now, will get from the savedInstance
+        SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(parent);
+        IRepositoryIdProvider repositoryId = RepositoryId.create(preferences.getString(Resources.USER_REPO_OWNER, ""), preferences.getString(Resources.USER_REPO, ""));
         List<CommitFile> commitFiles = new ArrayList<CommitFile>();
 
         RepositoryCommit commit = gsc.getCommit(repositoryId, sha);

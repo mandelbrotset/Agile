@@ -1,8 +1,11 @@
 package group9.agile.chalmers.com.agiletracker.network;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.MatrixCursor;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
 import org.eclipse.egit.github.core.RepositoryCommit;
@@ -25,11 +28,13 @@ import group9.agile.chalmers.com.agiletracker.exceptions.TaskNotCreatedException
 public class CommitListTask extends AsyncTask<String, Void, List<RepositoryCommit>> {
 
     private CommitViewAdapter adapter;
+    private Context context;
 
     private static CommitListTask singletonTask=null;
 
-    public CommitListTask(CommitViewAdapter adapter) {
+    public CommitListTask(CommitViewAdapter adapter, Context context) {
         this.adapter = adapter;
+        this.context=context;
     }
 
     public static CommitListTask getTask () throws TaskNotCreatedException {
@@ -44,7 +49,8 @@ public class CommitListTask extends AsyncTask<String, Void, List<RepositoryCommi
 
         CommitService commitService = new CommitService();
         String sha = params[0];
-        IRepositoryIdProvider repositoryId = RepositoryId.create("mandelbrotset", "Agile"); //Hardcoded now, will get from the savedInstance
+        SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(context);
+        IRepositoryIdProvider repositoryId = RepositoryId.create(preferences.getString(Resources.USER_REPO_OWNER, ""), preferences.getString(Resources.USER_REPO, ""));
         List<RepositoryCommit> commitFiles = new ArrayList<RepositoryCommit>();
         try {
             commitFiles = commitService.getCommits(repositoryId);
