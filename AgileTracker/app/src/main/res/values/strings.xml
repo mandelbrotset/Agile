@@ -16,4 +16,9 @@
 
         ]]>
     </string>
+    <string name="login">Login</string>
+    <string name="username">User name</string>
+    <string name="password_text">Password</string>
+    <string name="repo">Repository name</string>
+    <string name="accept_login">Log in</string>
 </resources>

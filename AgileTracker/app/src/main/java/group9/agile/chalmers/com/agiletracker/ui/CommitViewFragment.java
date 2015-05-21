@@ -21,7 +21,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
 
 import group9.agile.chalmers.com.agiletracker.MainActivity;
 import group9.agile.chalmers.com.agiletracker.R;
@@ -158,7 +157,6 @@ public class CommitViewFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> arg0) {
             }
         });
-        gui.loginPopUp();
     }
 
     /**
