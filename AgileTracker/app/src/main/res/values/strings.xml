@@ -20,5 +20,7 @@
     <string name="username">User name</string>
     <string name="password_text">Password</string>
     <string name="repo">Repository name</string>
+    <string name="repo_owner">Repository owner</string>
     <string name="accept_login">Log in</string>
+    <string name="logout">Log out</string>
 </resources>

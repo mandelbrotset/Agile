@@ -27,7 +27,10 @@ public class MainActivity extends FragmentActivity {
 
     ViewPager mViewPager;
     GithubServiceConnection githubServiceConnection;
-    //@Inject StateManager stateManager;
+    SampleFragmentPagerAdapter adapter;
+    public SampleFragmentPagerAdapter getAdapter(){
+        return adapter;
+    }
 
     /** Called when the user clicks the Send button */
     @Override
@@ -40,8 +43,8 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager(),
-                MainActivity.this));
+        adapter=new SampleFragmentPagerAdapter(getSupportFragmentManager(),MainActivity.this);
+        viewPager.setAdapter(adapter);
 
         // Give the SlidingTabLayout the ViewPager
         SlidingTabLayout slidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);

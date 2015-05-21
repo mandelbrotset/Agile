@@ -16,7 +16,7 @@ import group9.agile.chalmers.com.agiletracker.ui.PokerGameFragment;
 
 public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter {
     final int PAGE_COUNT = 2;
-    private String tabTitles[] = new String[] { "Log in", "Poker game"};
+    private String tabTitles[] = new String[] { "Agile tracker", "Poker game"};
     private Context context;
 
     public SampleFragmentPagerAdapter(FragmentManager fm, Context context) {
@@ -35,10 +35,8 @@ public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
             Boolean loggedIn= preferences.getBoolean(Resources.LOGGED_IN, false);
             if(loggedIn){
-                tabTitles[0]="Commit info";
                 return new CommitViewFragment();
             }else{
-                tabTitles[0]="Log in";
                 return new LoginFragment();
             }
 
@@ -55,13 +53,6 @@ public class SampleFragmentPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         // Generate title based on item position
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        Boolean loggedIn= preferences.getBoolean(Resources.LOGGED_IN, false);
-        if(loggedIn){
-            tabTitles[0]="Commit info";
-        }else{
-            tabTitles[0]="Log in";
-        }
         return tabTitles[position];
     }
 }

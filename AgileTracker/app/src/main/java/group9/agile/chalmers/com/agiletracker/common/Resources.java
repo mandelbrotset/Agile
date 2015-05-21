@@ -17,6 +17,7 @@ public class Resources {
     public static final String USER_NAME = "UserName";
     public static final String USER_PASSWORD = "UserPassword";
     public static final String USER_REPO = "UserRepo";
+    public static final String USER_REPO_OWNER = "RepoOwner";
 
     public static final String BRANCH_NAME="master";
     public static final String BRANCH_SHA= "58dae94fbc9cc37fa1056b127297ab596ece4cd3";

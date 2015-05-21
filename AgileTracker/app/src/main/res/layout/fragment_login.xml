@@ -39,6 +39,13 @@
         android:hint="@string/repo">
     </EditText>
 
+    <EditText
+        android:id="@+id/input_repo_owner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/repo_owner">
+    </EditText>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
