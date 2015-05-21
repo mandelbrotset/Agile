@@ -60,7 +60,7 @@ public class LoginFragment extends Fragment {
 
                 MatrixCursor cursor = new MatrixCursor(new String[]{"_id", Resources.COMMIT_MESSAGE, Resources.COMMIT_AUTHOR, Resources.COMMIT_DATE, Resources.COMMIT_SHA});
                 CommitViewAdapter adapter = new CommitViewAdapter(getActivity(), cursor);
-                CommitListTask task = new CommitListTask(adapter);
+                CommitListTask task = new CommitListTask(adapter, getActivity());
                 task.execute("");
 
                 MainActivity activity=(MainActivity)getActivity();
