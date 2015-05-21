@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.transition.Visibility;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -60,7 +61,7 @@ public class MainActivity extends FragmentActivity {
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putBoolean(Resources.LOGGED_IN, false);
                 editor.commit();
-
+                ((Button)v).setVisibility(View.INVISIBLE);
                 adapter.notifyDataSetChanged();
 
 
