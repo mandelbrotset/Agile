@@ -67,7 +67,7 @@ public class CommitViewFragment extends Fragment {
         CommitViewAdapter adapter = new CommitViewAdapter(getActivity(), cursor);
         list.setAdapter(adapter);
 
-        CommitListTask task = new CommitListTask(adapter);
+        CommitListTask task = new CommitListTask(adapter, getActivity());
         task.execute(sha);
         setupSpinner(view);
 
