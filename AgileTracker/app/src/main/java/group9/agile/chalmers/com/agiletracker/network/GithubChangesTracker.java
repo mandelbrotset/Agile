@@ -1,6 +1,7 @@
 package group9.agile.chalmers.com.agiletracker.network;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
@@ -33,10 +34,15 @@ public class GithubChangesTracker extends Thread {
 
     private RepositoryService service;
 
+    public GithubChangesTracker(Context context){
+        this.context=context;
+    }
+
     private Activity changesDisplayer;
     private HashSet<String> displayedCommits;
     private boolean isRunning = false;
     private GithubServiceConnection gsc;
+    Context context;
 
     public GithubChangesTracker(Activity changesDisplayer) {
         displayedCommits = new HashSet<String>();
@@ -46,7 +52,7 @@ public class GithubChangesTracker extends Thread {
     }
 
     private void checkChanges() {
-        new ListRepositoriesTask().execute(Resources.BRANCH_SHA);//TODO: unuglyize this!
+        new ListRepositoriesTask(context).execute(Resources.BRANCH_SHA);//TODO: unuglyize this!
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(changesDisplayer);
         String repoOwner = prefs.getString(Resources.USER_REPO_OWNER, "");
         String repoName = prefs.getString(Resources.USER_REPO, "");

@@ -1,6 +1,9 @@
 package group9.agile.chalmers.com.agiletracker.network;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import org.eclipse.egit.github.core.CommitFile;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
@@ -14,6 +17,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import group9.agile.chalmers.com.agiletracker.common.Resources;
 import group9.agile.chalmers.com.agiletracker.common.StateManager;
 import group9.agile.chalmers.com.agiletracker.ui.CommitViewFragment;
 
@@ -24,13 +28,19 @@ public class ListRepositoriesTask extends AsyncTask<String, Void, List<Repositor
     //@Inject
     //StateManager stateManager;
     StateManager stateManager = StateManager.getInstance();
+    Context context;
+
+    public ListRepositoriesTask(Context context){
+        this.context=context;
+    }
 
     @Override
     protected List<RepositoryBranch> doInBackground(String... params) {
         try {
             String sha=params[0];
             RepositoryService service = new RepositoryService();
-            IRepositoryIdProvider repositoryId= RepositoryId.create("mandelbrotset", "Agile");
+            SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(context);
+            IRepositoryIdProvider repositoryId = RepositoryId.create(preferences.getString(Resources.USER_REPO_OWNER, ""), preferences.getString(Resources.USER_REPO, ""));
             return service.getBranches(repositoryId);
         } catch (IOException e) {
             Log.e("network", "Network problems");

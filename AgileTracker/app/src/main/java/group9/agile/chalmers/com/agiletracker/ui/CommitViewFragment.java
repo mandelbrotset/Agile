@@ -114,7 +114,7 @@ public class CommitViewFragment extends Fragment {
 
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dropDownList.setAdapter(dataAdapter);
-        new ListRepositoriesTask().execute(Resources.BRANCH_SHA);
+        new ListRepositoriesTask(getActivity()).execute(Resources.BRANCH_SHA);
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String branchName = preferences.getString(Resources.BRANCH_NAME, "");
@@ -129,7 +129,7 @@ public class CommitViewFragment extends Fragment {
         dropDownList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             // Is called each time the current item is changed
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                new ListRepositoriesTask().execute(Resources.BRANCH_SHA); //?
+                new ListRepositoriesTask(getActivity()).execute(Resources.BRANCH_SHA); //?
 
 
                 //Store the branch name in the preferences
