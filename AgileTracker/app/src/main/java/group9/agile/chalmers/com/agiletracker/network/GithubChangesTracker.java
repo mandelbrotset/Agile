@@ -46,7 +46,8 @@ public class GithubChangesTracker extends Thread {
     }
 
     private void checkChanges() {
-        new ListRepositoriesTask().execute(Resources.BRANCH_SHA);//TODO: unuglyize this!
+        new ListRepositoriesTask((MainActivity)changesDisplayer).execute(Resources.BRANCH_SHA);
+        //TODO: execute CommitFilesTask here too
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(changesDisplayer);
         String repoOwner = prefs.getString(Resources.USER_REPO_OWNER, "");
         String repoName = prefs.getString(Resources.USER_REPO, "");
