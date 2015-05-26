@@ -17,6 +17,10 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import group9.agile.chalmers.com.agiletracker.MainActivity;
+import group9.agile.chalmers.com.agiletracker.common.Resources;
+import group9.agile.chalmers.com.agiletracker.exceptions.TaskNotCreatedException;
+
 /**
  * Created by isak & Sarah on 5/12/15.
  */
@@ -95,6 +99,12 @@ public class GithubBackendService extends Service {
          */
         public void login(String username, String password) {
             client.setCredentials(username, password);
+            new ListRepositoriesTask((MainActivity)MainActivity.activity).execute(Resources.BRANCH_SHA);
+            try {
+                CommitListTask.getTask().execute();
+            } catch (TaskNotCreatedException e) {
+                e.printStackTrace();
+            }
             if (commitService != null) return;
             commitService = new CommitService(client);
         }

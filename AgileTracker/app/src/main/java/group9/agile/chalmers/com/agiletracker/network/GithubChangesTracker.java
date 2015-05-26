@@ -22,6 +22,8 @@ import java.util.List;
 import group9.agile.chalmers.com.agiletracker.common.Resources;
 import group9.agile.chalmers.com.agiletracker.MainActivity;
 import group9.agile.chalmers.com.agiletracker.common.notification.Notificator;
+import group9.agile.chalmers.com.agiletracker.exceptions.TaskNotCreatedException;
+
 /**
  * Created by isak & Sarah on 4/28/15.
  */
@@ -47,7 +49,11 @@ public class GithubChangesTracker extends Thread {
 
     private void checkChanges() {
         new ListRepositoriesTask((MainActivity)changesDisplayer).execute(Resources.BRANCH_SHA);
-        //TODO: execute CommitFilesTask here too
+        try {
+            CommitListTask.getTask().execute();
+        } catch (TaskNotCreatedException e) {
+            e.printStackTrace();
+        }
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(changesDisplayer);
         String repoOwner = prefs.getString(Resources.USER_REPO_OWNER, "");
         String repoName = prefs.getString(Resources.USER_REPO, "");
