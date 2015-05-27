@@ -29,7 +29,7 @@ import group9.agile.chalmers.com.agiletracker.exceptions.TaskNotCreatedException
  * Created by Malin and Alma on 12/05/2015.
  */
 public class CommitFilesTask extends AsyncTask<String, Void, List<CommitFile>> {
-
+    //notification test
     private FilesViewAdapter adapter;
 
     private Activity parent;
